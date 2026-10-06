@@ -1,0 +1,9 @@
+FROM python:3.10-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+COPY logistics_sdk/ /app/logistics_sdk/
+RUN pip install ./logistics_sdk
+COPY main.py .
+EXPOSE 9000
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "9000"]
